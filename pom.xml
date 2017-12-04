@@ -101,6 +101,8 @@
 										<entryPoint>
 											<arg>java</arg>
 											<arg>-jar</arg>
+											<arg>-Xdebug</arg>
+											<arg>-Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=n</arg>
 											<arg>maven/${project.artifactId}-${project.version}.jar</arg>
 											<!--OR in shell form -->
 											<!-- <shell>java -jar $HOME/server.jar</shell> -->
