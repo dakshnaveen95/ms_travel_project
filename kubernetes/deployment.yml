@@ -1,0 +1,80 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:  
+  name: ms-travel-website
+  namespace: dev
+  labels:    
+    project.app: ms-travel-website
+    project.name: ms-travel-website
+spec:
+  replicas: 1
+  selector:
+    matchLabels:      
+      project.app: ms-travel-website
+      project.name: ms-travel-website
+  template:
+    metadata:
+      labels:              
+        project.app: ms-travel-website
+        project.name: ms-travel-website
+    spec: 
+      imagePullSecrets:        
+        - name: regsecret   
+      containers:
+        -  
+          image: ms-travel-website:1.0.0 
+          livenessProbe:            
+            failureThreshold: 66
+            httpGet:
+              path: /info
+              port: 8080
+            initialDelaySeconds: 240
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1   
+          name: ms-travel-website 
+          ports:            
+            - containerPort: 8080
+              name: http
+              protocol: TCP 
+          readinessProbe:            
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1 
+          resources:            
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 500Mi 
+          securityContext:            
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true  
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NODE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          envFrom:          
+          volumeMounts:          
+            - name: ms-travel-website-config
+              mountPath: /application.properties
+              subPath: application.properties
+      volumes:      
+        - name: ms-travel-website-config
+          configMap:
+             name: ms-travel-website

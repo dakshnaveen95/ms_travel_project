@@ -1,0 +1,63 @@
+### Define your project
+global:
+  project:
+    lob: test
+    vsad: test
+  build:
+    commitId: read_from_jenkins
+    env: dev
+    branch: master
+
+### Auto Scaling requirements
+autoscaling:
+  min: 1
+  max: 10
+  targetCPUUtilization: 70
+
+## Define your container
+deployment:
+  template:
+    imagePullSecrets:
+      - name: regsecret
+    containers:
+      - name: ms-travel-website
+        image: ms-travel-website:latest
+        ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /info
+            port: 8080
+          initialDelaySeconds: 240
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 66
+        readinessProbe: 
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+          requests:
+            cpu: "100m"
+            memory: "500Mi"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+
+service:
+  ports:
+    - name: travel-service
+      port: 8080
+      targetPort: 8080
+      protocol: TCP

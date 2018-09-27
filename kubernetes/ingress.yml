@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ms-travel-website
+  labels:
+    project.app: ms-travel-website
+    project.name: ms-travel-website
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: sandbox.aws-us-east-1c.kube.test.com
+      http:
+        paths:
+        - backend:
+            serviceName: ms-travel-website
+            servicePort: 8080
+          path: /

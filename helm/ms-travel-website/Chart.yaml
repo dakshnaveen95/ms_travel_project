@@ -1,0 +1,11 @@
+name: ms-travel-website
+home: https://github.com/projects/deepank-sharma/repos/ms-travel-website
+sources:
+- https://github.com/projects/deepank-sharma/repos/ms-travel-website.git
+version: 1.0.0
+description: Travel service with springboot, kubernetes and docker.
+keywords:
+- travel
+maintainers:
+- name: Deepank Sharma
+icon: /resources/img/springboot.png

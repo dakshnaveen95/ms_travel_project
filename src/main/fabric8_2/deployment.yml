@@ -5,6 +5,22 @@ metadata:
 spec:
   replicas: 1
   template:
+    spec:
+      containers:
+        - resources:
+            limits:
+              memory: "0.5Gi"
+            requests:
+              memory: "100Mi"
+          args:
+          - -mem-total
+          - 150Mi
+          - -mem-alloc-size
+          - 10Mi
+          - -mem-alloc-sleep
+          - 1s
+      imagePullSecrets:
+        - name: regsecret
     metadata:
       labels:
         project: ${project.artifactId}

@@ -44,7 +44,7 @@ public class TravelController {
 		
 		System.out.println(Thread.currentThread().getName() + "@Controller");
 		return ResponseEntity.ok().body(
-				service.selectBestTripPlan(initializeAirlines(), env.getProperty("travel.service.destination"), env.getProperty("travel.service.source")));						
+				service.selectBestTripPlan(initializeAirlines(), "DC", "Dallas"));						
 	}
 	
 	/**
