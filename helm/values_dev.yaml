@@ -22,7 +22,7 @@ deployment:
       - name: regsecret
     containers:
       - name: ms-travel-website
-        image: oneartifactory.verizon.com:8091/vzw/bqev/ms-travel-website:latest
+        image: ms-travel-website:latest
         ports:
           - containerPort: 8080
             name: http
