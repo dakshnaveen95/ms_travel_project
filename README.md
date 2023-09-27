@@ -1,5 +1,4 @@
 **MS-TRAVEL-WEBSITE Microservice**
-*Author Deepank Sharma*
 
 This is a microservice which is mocking talking to different airline, hotel and car providers to get the possible rate for the customers. Exploring the Completable future functionality offered by JDK 8 for asynchronous programming.
 
